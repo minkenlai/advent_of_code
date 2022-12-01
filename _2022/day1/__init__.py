@@ -6,7 +6,7 @@ def max_sum(source, top_n):
     sum = 0
     highest = []
     lowest = 0
-    for line in sys.stdin:
+    for line in source:
         v = line.strip()
         if v:
             v = int(v)
@@ -26,6 +26,20 @@ def max_sum(source, top_n):
         sum += v
     return sum
 
+def iter_ints(source):
+    for line in source:
+        if isinstance(line, str):
+            v = line.strip()
+        elif isinstance(line, int):
+            v = int
+        else:
+            raise Exception(f"unexpected type {line.__class__}")
+        if v:
+            if isinstance(v, str):
+                v = int(v)
+            yield v
+        else:
+            return
 
 if __name__ == "__main__":
     print(f"sum of top 3 are: {max_sum(sys.stdin, 3)}")
