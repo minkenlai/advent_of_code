@@ -1,6 +1,4 @@
-import io
 import sys
-
 
 def max_sum(source, top_n):
     sum = 0
@@ -40,6 +38,7 @@ def iter_ints(source):
             yield v
         else:
             return
+
 
 if __name__ == "__main__":
     print(f"sum of top 3 are: {max_sum(sys.stdin, 3)}")
