@@ -1,8 +1,10 @@
 import sys
+from .lib import *
 
 def max_sum(source, top_n):
     sum = 0
     highest = []
+    all = []
     lowest = 0
     for line in source:
         v = line.strip()
@@ -11,6 +13,7 @@ def max_sum(source, top_n):
             sum += v
             print(f"{sum=} after {v=}")
         else:
+            all.append(sum)
             if (sum > lowest):
                highest.append(sum)
                highest.sort()
@@ -22,6 +25,10 @@ def max_sum(source, top_n):
     sum = 0
     for v in highest:
         sum += v
+
+    all.sort()
+    top3 = all[-3:]
+    print(f"{top3=}")
     return sum
 
 def iter_ints(source):
