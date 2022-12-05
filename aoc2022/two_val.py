@@ -1,11 +1,14 @@
 import sys
 from .lib import *
 
+
 def value_of(x) -> int:
-    return (x)
+    return x
+
 
 def score(a, b) -> int:
     return a + b
+
 
 def run(source):
     sum = 0
@@ -14,7 +17,6 @@ def run(source):
         print(f"{a=} {b=}")
         sum += score(a, b)
         print(f"{sum=}")
-
 
 
 if __name__ == "__main__":

@@ -1,19 +1,20 @@
 import sys
 from .lib import *
 
+
 def value_of(x) -> int:
-    return (x)
+    return x
+
 
 def score(v) -> int:
-    return (
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    ).index(v) + 1
+    return ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").index(v) + 1
+
 
 def run(source):
     sum = 0
     for line in source:
         l = line.strip()
-        h = int(len(l)/2)
+        h = int(len(l) / 2)
         a = l[0:h]
         b = l[h:]
         print(f"{a=} {b=}")
@@ -23,6 +24,7 @@ def run(source):
                 sum += score(c)
                 print(f"  {c=} {sum=}")
                 f.append(c)
+
 
 def run2(source):
     sum = 0
@@ -34,6 +36,7 @@ def run2(source):
                 print(f"  {v=} {sum=}")
                 break
     return sum
+
 
 if __name__ == "__main__":
     assert score("a") == 1

@@ -1,16 +1,16 @@
 import sys
 from .lib import *
 
-RPS={
-    "A" : 1,
-    "B" : 2,
-    "C" : 3,
+RPS = {
+    "A": 1,
+    "B": 2,
+    "C": 3,
     "X": 1,
     "Y": 2,
     "Z": 3,
 }
 
-map_to_mine={
+map_to_mine = {
     "X": -1,
     "Y": 0,
     "Z": +1,
@@ -32,6 +32,7 @@ def score1(a, b):
     print(f"{x=} {y=} {v=}")
     return v
 
+
 def score2(a, b):
     x = convert(a, RPS)
     y = x + map_to_mine[b]
@@ -43,6 +44,7 @@ def score2(a, b):
     print(f"{x=} {y=} {v=}")
     return v
 
+
 def run():
     sum1 = 0
     sum2 = 0
@@ -52,7 +54,6 @@ def run():
         sum1 += score1(a, b)
         sum2 += score2(a, b)
         print(f"{sum1=} {sum2=}")
-
 
 
 if __name__ == "__main__":
