@@ -105,8 +105,10 @@ def value_of(x) -> int:
 
 def score(a, b) -> int:
     return a + b
-class File():
-    total_size:int = 0
+
+
+class File:
+    total_size: int = 0
 
     def __init__(self, name: str, size: int):
         self.name = name
@@ -115,10 +117,11 @@ class File():
     def __repr__(self) -> str:
         return f" file {self.name=} {self.total_size=}"
 
+
 all_dirs: list = []
 
-class Dir():
 
+class Dir:
     def __init__(self, name: str, parent: "Dir" = None):
         if not name:
             raise ValueError("no name provided")
@@ -139,9 +142,9 @@ class Dir():
 
     @property
     def fullname(self) -> str:
-        if self.name=="/":
+        if self.name == "/":
             return ""
-        return (self.parent.fullname if self.parent else "") +"/"+ self.name
+        return (self.parent.fullname if self.parent else "") + "/" + self.name
 
     def __repr__(self) -> str:
         return f"Dir {self.fullname=} {self.children=}"
@@ -187,7 +190,9 @@ def run(source: list[str]):
         size, name = line.strip().split(" ")
         print(f"{size=} {name=}")
         if name in current_dir.children:
-            raise ValueError(f"{current_dir.fullname=} already has {name}: {current_dir.children[name]}")
+            raise ValueError(
+                f"{current_dir.fullname=} already has {name}: {current_dir.children[name]}"
+            )
         current_dir.children[name] = File(name, int(size))
         print(f"{current_dir.name=} {current_dir.children=}")
 
@@ -211,8 +216,7 @@ def run(source: list[str]):
         print(s, sizes[s].fullname)
 
 
-
 if __name__ == "__main__":
-    run(sys.stdin)
+    run(all_lines(get_source()))
 
 print(f"done {__name__}")

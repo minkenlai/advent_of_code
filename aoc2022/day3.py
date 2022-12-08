@@ -103,6 +103,8 @@ def run2(source):
 if __name__ == "__main__":
     assert score("a") == 1
     assert score("Z") == 52
-    run2(sys.stdin)
+    lines = all_lines(get_source())
+    run(lines)
+    run2(lines)
 
 print(f"done {__name__}")

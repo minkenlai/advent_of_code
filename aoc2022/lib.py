@@ -1,7 +1,24 @@
+"""convenience library for Advent of Code"""
+import importlib
 import sys
 import typing as T
 
 from collections import deque
+
+
+def get_source():
+    if len(sys.argv) > 1:
+        print(f"input file: {sys.argv[1]=}")
+        return open(sys.argv[1], "r")
+    return sys.stdin
+
+
+def all_lines(source=sys.stdin):
+    return [v.strip() for v in source]
+
+
+def reload(mod="aoc2022"):
+    return importlib.reload(mod)
 
 
 def ints(value: str, splitter: str = " ") -> list[int]:
@@ -13,14 +30,10 @@ def convert(value: str, mapping: dict[str, T.Any]):
     return mapping[value]
 
 
-def all_lines(source=sys.stdin):
-    return [v.strip() for v in sys.stdin]
-
-
-def grouped(source, group_size=3):
+def grouped(lines, group_size=3):
     group = []
     i = 0
-    for line in source:
+    for line in lines:
         group.append(line.strip())
         i += 1
         if i % group_size == 0:

@@ -170,8 +170,9 @@ def original(source=sys.stdin):
 if __name__ == "__main__":
     # original()
     stacks = load_stacks()
+
     # run(sys.stdin)
-    for line in sys.stdin:
+    for line in get_source():
         _, count, _, src, _, des = line.strip().split(" ")
         move(stacks, int(count), int(src), int(des))
     for stack in stacks:

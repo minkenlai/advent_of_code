@@ -59,8 +59,7 @@ def score(a, b) -> int:
     return a + b
 
 
-def run(source):
-    lines = all_lines(source)
+def run(lines):
     print(len(lines))
     print(len(lines[0]))
     sum = 0
@@ -80,7 +79,7 @@ def run(source):
 
 
 if __name__ == "__main__":
-
-    run(["bvwbjplbgvbhsrlpgdmjqwftvncz"])
+    # run(["bvwbjplbgvbhsrlpgdmjqwftvncz"])
+    run(all_lines(get_source()))
 
 print(f"done {__name__}")

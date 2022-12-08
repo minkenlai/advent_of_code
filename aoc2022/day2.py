@@ -90,10 +90,10 @@ def score2(a, b):
     return v
 
 
-def run():
+def run(source=sys.stdin):
     sum1 = 0
     sum2 = 0
-    for line in sys.stdin:
+    for line in source:
         a, b = line.strip().split(" ")
         print(f"{a=} {b=}")
         sum1 += score1(a, b)
@@ -106,6 +106,6 @@ if __name__ == "__main__":
     assert convert("C", RPS) == 3
     assert convert("X", RPS) == 1
     assert convert("Z", RPS) == 3
-    run()
+    run(get_source())
 
 print(f"done {__name__}")

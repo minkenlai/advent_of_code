@@ -110,7 +110,6 @@ def run(source):
 
 
 if __name__ == "__main__":
-
-    run(sys.stdin)
+    run(get_source())
 
 print(f"done {__name__}")

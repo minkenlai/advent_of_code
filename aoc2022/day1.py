@@ -102,6 +102,6 @@ def iter_ints(source):
 
 
 if __name__ == "__main__":
-    print(f"sum of top 3 are: {max_sum(sys.stdin, 3)}")
+    print(f"sum of top 3 are: {max_sum(get_source(), 3)}")
 
 print(f"done {__name__}")
