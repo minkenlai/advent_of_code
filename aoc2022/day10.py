@@ -2,20 +2,23 @@ import sys
 from .lib import *
 
 
-CHECK = [20,60,100,140,180,220]
+CHECK = [20, 60, 100, 140, 180, 220]
 
 X = 1
-CRT:list[str] = []
+CRT: list[str] = []
 sum: int = 0
 current_line: str = ""
 DEBUG = False
 
+
 def sample() -> list[str]:
     return all_lines(open("aoc2022/inputs/day10-example.txt", "r"))
+
 
 def debug(str):
     if DEBUG:
         print(str)
+
 
 def part1(tick: int):
     global sum
@@ -30,13 +33,13 @@ def part2(tick: int):
     global current_line, CRT
 
     def sprite(pos: int) -> str:
-        return "#" if pos % 40 in [X-1, X, X+1] else "."
+        return "#" if pos % 40 in [X - 1, X, X + 1] else "."
 
     current_line += sprite(tick)
     tick += 1
     if tick % 40 == 0:
         CRT.append(current_line)
-        current_line=""
+        current_line = ""
     debug(f"{tick=} {X=} {current_line=}")
     return tick
 
@@ -58,6 +61,7 @@ def run(source: list[str], do_tick):
         debug(f"{tick=} {X=} {b=} {current_line=}")
     for l in CRT:
         print(l)
+
 
 if __name__ == "__main__":
     lines = all_lines(get_source())

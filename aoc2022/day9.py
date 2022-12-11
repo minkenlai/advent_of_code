@@ -11,28 +11,28 @@ def larger_sample():
 
 
 def follow(head, tail) -> list[tuple[int, int]]:
-    #print(f"{tail=}")
+    # print(f"{tail=}")
     x, y = tail[0]
     w, z = head
-    if y==z and abs(x - w) > 1:
+    if y == z and abs(x - w) > 1:
         if x < w:
-            x = w-1
+            x = w - 1
         elif x > w:
-            x = w+1
-    elif x==w and abs(y - z) > 1:
+            x = w + 1
+    elif x == w and abs(y - z) > 1:
         if y < z:
-            y = z-1
+            y = z - 1
         elif y > z:
-            y = z+1
+            y = z + 1
     elif abs(y - z) + abs(x - w) > 2:
         if x < w:
-            x = w-1 if w - x > 1 else w
+            x = w - 1 if w - x > 1 else w
         elif x > w:
-            x = w+1 if x - w > 1 else w
+            x = w + 1 if x - w > 1 else w
         if y < z:
-            y = z-1 if z - y > 1 else z
+            y = z - 1 if z - y > 1 else z
         elif y > z:
-            y = z+1 if y - z > 1 else z
+            y = z + 1 if y - z > 1 else z
         print(f" {head=} {tail[0]=} {x=} {y=}")
 
     new_tail = [(x, y)]
@@ -42,23 +42,25 @@ def follow(head, tail) -> list[tuple[int, int]]:
     return new_tail
 
 
-def move(head: tuple[int, int], tail: list[tuple[int, int]], d:str, c:int, visited: set):
+def move(
+    head: tuple[int, int], tail: list[tuple[int, int]], d: str, c: int, visited: set
+):
     for i in range(c):
-        if d=="U":
-            head = (head[0]+1, head[1])
-        elif d=="D":
-            head = (head[0]-1, head[1])
-        if d=="L":
-            head = (head[0], head[1]-1)
-        elif d=="R":
-            head = (head[0], head[1]+1)
+        if d == "U":
+            head = (head[0] + 1, head[1])
+        elif d == "D":
+            head = (head[0] - 1, head[1])
+        if d == "L":
+            head = (head[0], head[1] - 1)
+        elif d == "R":
+            head = (head[0], head[1] + 1)
         tail = follow(head, tail)
         visited.add(tail[-1])
     return head, tail
 
 
 def run(lines):
-    visited=set()
+    visited = set()
     head: tuple[int, int] = (0, 0)
     tail: list[tuple[int, int]] = [(0, 0) for _ in range(9)]
     for l in lines:
