@@ -5,11 +5,14 @@ import itertools
 PART1 = False
 PART2 = True
 
+
 def sample():
     return open("aoc2022/inputs/day14-example.txt", "r")
 
+
 def input():
     return open("aoc2022/inputs/day14.txt", "r")
+
 
 def parse(lines: list[str]):
     global min_x, max_x, max_y
@@ -30,15 +33,17 @@ def parse(lines: list[str]):
         graph.append(l)
     return graph
 
+
 def justify(graph):
     print(f"justified after finding {min_x=} {max_x=} {max_y=}")
     justified = []
     for l in graph:
         print(l)
-        l = [(x-min_x, y) for (x, y) in l]
+        l = [(x - min_x, y) for (x, y) in l]
         print(l)
         justified.append(l)
     return justified
+
 
 def plot(graph):
     h = {}
@@ -66,14 +71,17 @@ def plot(graph):
                 print(f"{x=} {y=}")
             h[n] = "#"
             p = n
-        #print(f"{len(h)=}")
+        # print(f"{len(h)=}")
     return h
 
+
 def left_of(c):
-    return (c[0]-1, c[1])
+    return (c[0] - 1, c[1])
+
 
 def right_of(c):
-    return (c[0]+1, c[1])
+    return (c[0] + 1, c[1])
+
 
 def settle(start):
     global result
@@ -92,15 +100,17 @@ def settle(start):
     result[c] = "o"
     return c
 
+
 def print_graph():
-    for y in range(max_y+1):
+    for y in range(max_y + 1):
         l = ""
-        for x in range(min_x, max_x+1):
+        for x in range(min_x, max_x + 1):
             if (x, y) in result:
                 l += result[(x, y)]
             else:
                 l += "."
         print(l)
+
 
 if __name__ == "__main__":
     lines = all_lines(sample())
@@ -117,7 +127,7 @@ if __name__ == "__main__":
             count += 1
             r = settle(start)
             print(f"{r=}")
-            #print_graph()
+            # print_graph()
             if not r:
                 break
             if r == start:
@@ -125,7 +135,6 @@ if __name__ == "__main__":
                 break
         print_graph()
         print(f"{count=}")
-
 
     if PART2:
         start = (500, 0)
@@ -140,7 +149,7 @@ if __name__ == "__main__":
             count += 1
             r = settle(start)
             print(f"{r=}")
-            #print_graph()
+            # print_graph()
             if not r:
                 break
             if r == start:

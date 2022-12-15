@@ -17,7 +17,7 @@ def all_lines(source=sys.stdin):
     return [v.strip() for v in source]
 
 
-def reload(mod="aoc2022"):
+def reload(mod):
     return importlib.reload(mod)
 
 
@@ -80,7 +80,11 @@ def ranges_overlap(a: tuple[int, int], b: tuple[int, int]):
     return not ranges_disjoint(a, b)
 
 
-def merge_ranges(ranges: list[tuple[int, int]], new_range: T.Optional[tuple[int, int]], merge_adj=True) -> list[tuple[int, int]]:
+def merge_ranges(
+    ranges: list[tuple[int, int]],
+    new_range: T.Optional[tuple[int, int]],
+    merge_adj=True,
+) -> list[tuple[int, int]]:
     """ranges must be sorted in ascending order, the new_range will be inserted with any overlaps merged"""
     new_ranges = []
     merge_adj = 1 if merge_adj else 0
@@ -92,12 +96,15 @@ def merge_ranges(ranges: list[tuple[int, int]], new_range: T.Optional[tuple[int,
             new_range = None
             new_ranges.append(existing_range)
         else:
-            #print(f"merge {existing_range=} and {new_range=}")
-            new_range = (min(existing_range[0], new_range[0]), max(existing_range[1], new_range[1]))
-            #print(f"got {new_range=}")
+            # print(f"merge {existing_range=} and {new_range=}")
+            new_range = (
+                min(existing_range[0], new_range[0]),
+                max(existing_range[1], new_range[1]),
+            )
+            # print(f"got {new_range=}")
     if new_range is not None:
         new_ranges.append(new_range)
-    #print(f"{new_ranges=}")
+    # print(f"{new_ranges=}")
     return new_ranges
 
 

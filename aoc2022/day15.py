@@ -12,11 +12,13 @@ EXAMPLE = True
 PART1 = True
 PART2 = True
 
+
 def sample():
     global target_row, part2_max
     target_row = 10
     part2_max = 20
     return open("aoc2022/inputs/day15-example.txt", "r")
+
 
 def input():
     global target_row, part2_max
@@ -24,16 +26,19 @@ def input():
     part2_max = 4000000
     return open("aoc2022/inputs/day15.txt", "r")
 
+
 def dist(x, y, u, v):
     return abs(x - u) + abs(y - v)
+
 
 beacons: list[tuple[int, int]] = []
 max_max_x: int
 min_min_x: int
 
+
 def parse(lines: list[str]):
     global beacons, sensors, max_x, max_y, min_x, min_y, max_d, max_max_x, min_min_x
-    p = re.compile('[xy]=-?[0-9]*')
+    p = re.compile("[xy]=-?[0-9]*")
     beacons = []
     sensors = {}
     min_x = None
@@ -62,19 +67,21 @@ def parse(lines: list[str]):
         max_max_x = max_max_x if max_max_x > val else val
     return sensors
 
+
 def print_graph():
     print(f"beacon dist={sensors[(8,7)]}")
-    for r in range(min_y, max_y+1):
+    for r in range(min_y, max_y + 1):
         l = ""
-        for c in range(min_min_x, max_max_x+1):
+        for c in range(min_min_x, max_max_x + 1):
             if (c, r) in sensors:
                 l += "S"
             elif dist(8, 7, c, r) <= sensors[(8, 7)]:
-                #print(f"dist={dist(8, 7, c, r)}")
+                # print(f"dist={dist(8, 7, c, r)}")
                 l += "#"
             else:
                 l += "."
         print(l)
+
 
 def intercept_row(x, y, r):
     d = sensors[(x, y)]
@@ -82,7 +89,8 @@ def intercept_row(x, y, r):
     if dx < 0:
         return None, None
     LOG.info(f"row {r} is in range of sensor ({x}, {y}) from {x-dx=} to {x+dx=}")
-    return x-dx, x+dx
+    return x - dx, x + dx
+
 
 if __name__ == "__main__":
     target_row = 0
@@ -95,7 +103,7 @@ if __name__ == "__main__":
     sensors = parse(lines)
     for c in sensors:
         LOG.info(f"{c=} {sensors[c]=}")
-    #print_graph()
+    # print_graph()
 
     if PART1:
         lowest = None
@@ -129,7 +137,7 @@ if __name__ == "__main__":
         gaps = []
         lowest = 0
         highest = part2_max
-        for target_row in range(lowest, highest+1):
+        for target_row in range(lowest, highest + 1):
             ranges = []
             for s in sensors:
                 x, y = s
@@ -145,10 +153,12 @@ if __name__ == "__main__":
                 if hi > highest:
                     highest = hi
             print(f"{target_row=} {ranges=}")
-            prev = (0,0)
+            prev = (0, 0)
             for r in ranges:
                 if r[0] - prev[1] > 1:
-                    print(f"======= row {target_row} has a gap between {prev[1]} and {r[0]}")
+                    print(
+                        f"======= row {target_row} has a gap between {prev[1]} and {r[0]}"
+                    )
                     gaps.append((target_row, prev[1], r[0]))
                 prev = r
         print(f"{gaps=}")

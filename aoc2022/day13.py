@@ -1,14 +1,18 @@
 from .lib import *
 import itertools
 
+
 def sample():
     return open("aoc2022/inputs/day13-example.txt", "r")
+
 
 def input():
     return open("aoc2022/inputs/day13.txt", "r")
 
+
 def both_int(a, b):
     return isinstance(a, int) and isinstance(b, int)
+
 
 def compare(a, b, prefix=""):
     if both_int(a, b):
@@ -57,6 +61,7 @@ def compare(a, b, prefix=""):
             raise ValueError
     return None
 
+
 def part1(lines):
     a = None
     b = None
@@ -86,17 +91,19 @@ def part1(lines):
                 print("wrong")
     return sum
 
+
 def comparator(a, b):
     res = compare(a, b)
     if res is None:
         return 0
     return -1 if res else 1
 
+
 PART1 = False
 PART2 = True
 
 if __name__ == "__main__":
-    #lines = all_lines(sample())
+    # lines = all_lines(sample())
     lines = all_lines(get_source())
 
     if PART1:
@@ -112,6 +119,7 @@ if __name__ == "__main__":
                 continue
             vals.append(eval(l))
         import functools
+
         results = sorted(vals, key=functools.cmp_to_key(comparator))
         marker1 = 0
         marker2 = 0
