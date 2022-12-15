@@ -64,12 +64,49 @@ def rotate(
     return new_lines
 
 
-def has_repeat(buffer):
+def has_repeat(buffer: T.Union[list, str]):
     s = set()
     for c in buffer:
         s.add(c)
     print(f"{s=} {buffer=}")
     return len(s) < len(buffer)
+
+
+def ranges_disjoint(a: tuple[int, int], b: tuple[int, int]):
+    return a[1] < b[0] or a[0] > b[1]
+
+
+def ranges_overlap(a: tuple[int, int], b: tuple[int, int]):
+    return not ranges_disjoint(a, b)
+
+
+def merge_ranges(ranges: list[tuple[int, int]], new_range: T.Optional[tuple[int, int]], merge_adj=True) -> list[tuple[int, int]]:
+    """ranges must be sorted in ascending order, the new_range will be inserted with any overlaps merged"""
+    new_ranges = []
+    merge_adj = 1 if merge_adj else 0
+    for existing_range in ranges:
+        if not new_range or existing_range[1] < new_range[0] - merge_adj:
+            new_ranges.append(existing_range)
+        elif new_range and existing_range[0] > new_range[1] + merge_adj:
+            new_ranges.append(new_range)
+            new_range = None
+            new_ranges.append(existing_range)
+        else:
+            #print(f"merge {existing_range=} and {new_range=}")
+            new_range = (min(existing_range[0], new_range[0]), max(existing_range[1], new_range[1]))
+            #print(f"got {new_range=}")
+    if new_range is not None:
+        new_ranges.append(new_range)
+    #print(f"{new_ranges=}")
+    return new_ranges
+
+
+def sort_ranges(ranges: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """ranges may have overlaps and unordered, the result will be sorted and merged"""
+    new_ranges = []
+    for existing_range in ranges:
+        new_ranges = merge_ranges(new_ranges, existing_range)
+    return new_ranges
 
 
 if __name__ == "__main__":
