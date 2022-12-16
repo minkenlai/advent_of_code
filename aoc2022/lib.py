@@ -1,14 +1,34 @@
 """convenience library for Advent of Code"""
 import importlib
+import logging
+import re
 import sys
 import typing as T
 
 from collections import deque
 
 
+logging.basicConfig()
+day = re.compile("day[0-9]*").match(sys.argv[0])
+if day:
+    day = day[0]
+else:
+    raise ValueError
+LOG = logging.getLogger("aoc_" + day)
+LOG.setLevel(logging.INFO)
+
+
+def sample():
+    return open(f"aoc2022/inputs/{day}-example.txt", "r")
+
+
+def input():
+    return open(f"aoc2022/inputs/{day}.txt", "r")
+
+
 def get_source():
     if len(sys.argv) > 1:
-        print(f"input file: {sys.argv[1]=}")
+        LOG.info(f"input file: {sys.argv[1]=}")
         return open(sys.argv[1], "r")
     return sys.stdin
 
@@ -72,6 +92,11 @@ def has_repeat(buffer: T.Union[list, str]):
     return len(s) < len(buffer)
 
 
+def mdist(x, y, u, v):
+    """manhattan distance"""
+    return abs(x - u) + abs(y - v)
+
+
 def ranges_disjoint(a: tuple[int, int], b: tuple[int, int]):
     return a[1] < b[0] or a[0] > b[1]
 
@@ -96,15 +121,15 @@ def merge_ranges(
             new_range = None
             new_ranges.append(existing_range)
         else:
-            # print(f"merge {existing_range=} and {new_range=}")
+            LOG.debug(f"merge {existing_range=} and {new_range=}")
             new_range = (
                 min(existing_range[0], new_range[0]),
                 max(existing_range[1], new_range[1]),
             )
-            # print(f"got {new_range=}")
+            LOG.debug(f"got {new_range=}")
     if new_range is not None:
         new_ranges.append(new_range)
-    # print(f"{new_ranges=}")
+    LOG.debug(f"{new_ranges=}")
     return new_ranges
 
 
@@ -153,4 +178,4 @@ if __name__ == "__main__":
         print(line)
 
 
-print(f"done {__name__}")
+LOG.info(f"done {__name__}")

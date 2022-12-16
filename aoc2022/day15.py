@@ -4,32 +4,10 @@ import itertools
 import logging
 import re
 
-logging.basicConfig()
-LOG = logging.getLogger("aoc_day15")
-LOG.setLevel(logging.INFO)
 
 EXAMPLE = True
 PART1 = True
 PART2 = True
-
-
-def sample():
-    global target_row, part2_max
-    target_row = 10
-    part2_max = 20
-    return open("aoc2022/inputs/day15-example.txt", "r")
-
-
-def input():
-    global target_row, part2_max
-    target_row = 2000000
-    part2_max = 4000000
-    return open("aoc2022/inputs/day15.txt", "r")
-
-
-def dist(x, y, u, v):
-    return abs(x - u) + abs(y - v)
-
 
 beacons: list[tuple[int, int]] = []
 max_max_x: int
@@ -53,7 +31,7 @@ def parse(lines: list[str]):
             max_y = y
             max_d = 0
         print(f"{x=} {y=} {u=} {v=}")
-        d = dist(x, y, u, v)
+        d = mdist(x, y, u, v)
         sensors[(x, y)] = d
         beacons.append((u, v))
         max_d = max_d if max_d is not None and max_d > d else d
@@ -75,8 +53,8 @@ def print_graph():
         for c in range(min_min_x, max_max_x + 1):
             if (c, r) in sensors:
                 l += "S"
-            elif dist(8, 7, c, r) <= sensors[(8, 7)]:
-                # print(f"dist={dist(8, 7, c, r)}")
+            elif mdist(8, 7, c, r) <= sensors[(8, 7)]:
+                # print(f"dist={mdist(8, 7, c, r)}")
                 l += "#"
             else:
                 l += "."
@@ -97,8 +75,12 @@ if __name__ == "__main__":
     part2_max = 0
     min_x = 0
     if EXAMPLE:
+        target_row = 10
+        part2_max = 20
         lines = all_lines(sample())
     else:
+        target_row = 2000000
+        part2_max = 4000000
         lines = all_lines(input())
     sensors = parse(lines)
     for c in sensors:
