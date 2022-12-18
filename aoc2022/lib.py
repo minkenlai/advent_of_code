@@ -9,21 +9,23 @@ from collections import deque
 
 
 logging.basicConfig()
-day = re.compile("day[0-9]*").match(sys.argv[0])
-if day:
-    day = day[0]
-else:
-    raise ValueError
-LOG = logging.getLogger("aoc_" + day)
+prog_name = None
+if sys.argv:
+    match = re.compile("day[0-9]*").findall(sys.argv[0])
+    if match:
+        prog_name = match[0]
+    else:
+        print(f"{sys.argv=}")
+LOG = logging.getLogger(prog_name)
 LOG.setLevel(logging.INFO)
 
 
 def sample():
-    return open(f"aoc2022/inputs/{day}-example.txt", "r")
+    return open(f"aoc2022/inputs/{prog_name}-example.txt", "r")
 
 
 def input():
-    return open(f"aoc2022/inputs/{day}.txt", "r")
+    return open(f"aoc2022/inputs/{prog_name}.txt", "r")
 
 
 def get_source():
@@ -139,6 +141,10 @@ def sort_ranges(ranges: list[tuple[int, int]]) -> list[tuple[int, int]]:
     for existing_range in ranges:
         new_ranges = merge_ranges(new_ranges, existing_range)
     return new_ranges
+
+
+def find_repeating_pattern():
+    pass
 
 
 if __name__ == "__main__":
