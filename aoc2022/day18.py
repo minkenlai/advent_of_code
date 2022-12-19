@@ -112,18 +112,18 @@ load_input()
 
 for d in droplets:
     x, y, z = d
-    if x > max_x:
-        max_x = x
-    elif x < min_x:
-        min_x = x
-    if y > max_y:
-        max_y = y
-    elif y < min_y:
-        min_y = y
-    if z > max_z:
-        max_z = z
-    elif z < min_z:
-        min_z = z
+    if x >= max_x:
+        max_x = x + 1
+    elif x <= min_x:
+        min_x = x - 1
+    if y >= max_y:
+        max_y = y + 1
+    elif y <= min_y:
+        min_y = y - 1
+    if z >= max_z:
+        max_z = z + 1
+    elif z <= min_z:
+        min_z = z - 1
 
 nn = count_neighbors()
 faces = len(droplets) * 6 - nn
@@ -139,13 +139,15 @@ spaces = {}  # coord -> how many droplets around it
 
 def count_spaces():
     shared_faces = 0
+    non_shared_faces = 0
     for d in droplets:
         for n in neighbors(d):
             if n in droplets:
                 shared_faces += 1
             else:
+                non_shared_faces += 1
                 spaces[n] = 1 if n not in spaces else spaces[n] + 1
-    return shared_faces
+    return shared_faces, non_shared_faces
 
 
 def merge_groups():
@@ -205,8 +207,8 @@ if not spaces:
     count_spaces()
 print(f"{len(spaces)=}")
 
-singles = merge_groups()
-print(f"{singles=} {len(spaces)=} {len(groups)=}")
+# singles = merge_groups()
+print(f"{len(spaces)=} {len(groups)=}")
 
 
 def print_groups():
@@ -250,4 +252,85 @@ def count_pfaces():
     return pfaces
 
 
-pfaces = count_pfaces()
+# pfaces = count_pfaces()
+
+
+def expand_boundaries():
+    global max_x, max_y, max_z, min_x, min_y, min_z
+    max_x += 1
+    max_y += 1
+    max_z += 1
+    min_x -= 1
+    min_y -= 1
+    min_z -= 1
+
+
+"""Try a different approach, just search from bounding box inwards"""
+
+
+def bounding_box():
+    nodes = [
+        (min_x, y, z) for y in range(min_y, max_y + 1) for z in range(min_z, max_z + 1)
+    ]
+    nodes.extend(
+        [
+            (max_x, y, z)
+            for y in range(min_y, max_y + 1)
+            for z in range(min_z, max_z + 1)
+        ]
+    )
+    nodes.extend(
+        [
+            (x, min_y, z)
+            for x in range(min_x, max_x + 1)
+            for z in range(min_z, max_z + 1)
+        ]
+    )
+    nodes.extend(
+        [
+            (x, max_y, z)
+            for x in range(min_x, max_x + 1)
+            for z in range(min_z, max_z + 1)
+        ]
+    )
+    nodes.extend(
+        [
+            (x, y, min_z)
+            for x in range(min_x, max_x + 1)
+            for y in range(min_y, max_y + 1)
+        ]
+    )
+    nodes.extend(
+        [
+            (x, y, max_z)
+            for x in range(min_x, max_x + 1)
+            for y in range(min_y, max_y + 1)
+        ]
+    )
+    return nodes
+
+
+nodes = bounding_box()
+visited = set()
+faces = 0
+
+
+def do_round(nodes):
+    global faces
+    next_nodes = []
+    for p in nodes:
+        if p in visited:
+            continue
+            raise ValueError(f"already seen {p=}")
+        visited.add(p)
+        for n in neighbors(p):
+            if n in droplets:
+                faces += 1
+            elif n not in visited:
+                next_nodes.append(n)
+    return next_nodes
+
+
+while nodes:
+    nodes = do_round(nodes)
+    print(f"{faces=}")
