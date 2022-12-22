@@ -35,8 +35,8 @@ def get_source():
     return sys.stdin
 
 
-def all_lines(source=sys.stdin):
-    return [v.strip() for v in source]
+def all_lines(source=sys.stdin, strip=False):
+    return [v.strip() if strip else v for v in source]
 
 
 def reload(mod):
