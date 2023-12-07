@@ -1,8 +1,8 @@
 import os
 import sys
 curr_dir = os.path.dirname(__file__)
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
-sys.path.append(parent_dir)
+aoc_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
+sys.path.append(aoc_dir)
 print(f"{sys.path=}")
 
 import aoc2023.lib
@@ -16,7 +16,9 @@ EXAMPLE = False
 PART1 = True
 PART2 = True
 
-day_num = 2
+day_name = os.path.basename(__file__)
+day_num = re.search(r"\d+", day_name).group()
+print(f"{day_name=} {day_num=}")
 
 def parse(lines: list[str]):
     values = {}
