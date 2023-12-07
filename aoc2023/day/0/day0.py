@@ -13,10 +13,10 @@ print(f"{sys.path=}")
 import aoc2023.lib
 from aoc2023.lib import all_lines, sample, input, LOG
 
-EXAMPLE = True and False
-EXAMPLE2 = False
-PART1 = True
-PART2 = True
+EXAMPLE = 1
+EXAMPLE2 = 0
+PART1 = 1
+PART2 = 1
 
 day_name = os.path.basename(__file__)
 day_num = re.search(r"\d+", day_name).group()
@@ -30,4 +30,4 @@ if __name__ == "__main__":
         lines = all_lines(open(curr_dir + '/example2', 'r'), strip=True)
     else:
         lines = all_lines(open(curr_dir + '/input', 'r'), strip=True)
-    print(f"{len(lines)=}")
+    print(f"input loaded, {len(lines)=}")
