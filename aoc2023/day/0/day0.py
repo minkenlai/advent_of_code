@@ -14,7 +14,6 @@ import aoc2023.lib
 from aoc2023.lib import all_lines, sample, input, LOG
 
 EXAMPLE = 1
-EXAMPLE2 = 0
 PART1 = 1
 PART2 = 1
 
@@ -24,10 +23,10 @@ print(f"{day_name=} {day_num=}")
 
 
 if __name__ == "__main__":
+    filename = '/input'
     if EXAMPLE:
-        lines = all_lines(open(curr_dir + '/example', 'r'), strip=True)
-    elif EXAMPLE2:
-        lines = all_lines(open(curr_dir + '/example2', 'r'), strip=True)
-    else:
-        lines = all_lines(open(curr_dir + '/input', 'r'), strip=True)
+        filename = '/example'
+        if EXAMPLE > 1:
+            filename = filename + EXAMPLE
+    lines = all_lines(open(curr_dir + filename, 'r'), strip=True)
     print(f"input loaded, {len(lines)=}")
