@@ -9,14 +9,7 @@ from collections import deque
 
 
 logging.basicConfig()
-day_name = None
-if sys.argv:
-    match = re.compile("day[0-9]*").findall(sys.argv[0])
-    if match:
-        day_name = match[0]
-    else:
-        raise Exception(f"unknown day {sys.argv=}")
-LOG = logging.getLogger(day_name)
+LOG = logging.getLogger()
 LOG.setLevel(logging.INFO)
 
 

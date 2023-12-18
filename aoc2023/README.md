@@ -2,10 +2,10 @@
 
 Run a particular day:
 ```
-python3 -m day.1.day1
+python3 -m day.day1
 ```
 
-Create a day from template '0'
+Create a day from template dir
 ```
 python3 -m day
 # follow prompt to create next day
