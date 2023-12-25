@@ -1,6 +1,7 @@
 """convenience library for Advent of Code"""
 import importlib
 import logging
+import os
 import re
 import sys
 import typing as T
@@ -13,13 +14,6 @@ LOG = logging.getLogger()
 LOG.setLevel(logging.INFO)
 
 
-def sample(day_num):
-    return open(f"day/{day_num}/example", "r")
-
-
-def input(day_num):
-    return open(f"day/{day_num}/input", "r")
-
 
 def get_source():
     if len(sys.argv) > 1:
@@ -30,6 +24,16 @@ def get_source():
 
 def all_lines(source=sys.stdin, strip=False):
     return [v.strip() if strip else v for v in source]
+
+def read_lines(curr_dir, example=0):
+    global lines
+    filename = "input"
+    if example:
+        filename = "example"
+        if example > 1:
+            filename = filename + str(example)
+    lines = all_lines(open(os.path.join(curr_dir, filename), "r"), strip=True)
+    print(f"input loaded, {len(lines)=}")
 
 
 def reload(mod):
